@@ -113,7 +113,7 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
         .uncheck()
         .should('not.be.checked')
     })
-    it.only('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+    it('Exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
         cy.get ('#firstName').type('Fabio')
         cy.get ('#lastName').type ('Cruz')
         cy.get ('#email').type ('fabio@gmail.com')
@@ -122,6 +122,35 @@ describe ('Central de Atendimento ao Cliente TAT', function() {
         cy.get ('button[type="submit"]').click()
         cy.get ('.error').should('be.visible')
     })
+    it('Seleciona arquivo da pasta fixture', function(){
+        cy.get ('input[type="file"]#file-upload')
+        .should('not.have.value')
+        .selectFile ('./cypress/fixtures/example.json')
+        .should(function($input){
+            expect($input[0].files[0].name).to.equal('example.json')
+        })
+       
+        })
+        it('Seleciona arquivo simulando um drag-and-drop', function(){
+            cy.get ('input[type="file"]#file-upload')
+            .should('not.have.value')
+            .selectFile ('./cypress/fixtures/example.json', {action:'drag-drop'})
+            .should(function($input){
+                expect($input[0].files[0].name).to.equal('example.json')
+            })
+           
+            })
+            it('Seleciona arquivo utilizando o arquivo no qual foi dado um alias', function(){
+                cy.fixture('example.json').as('sampleFile')
+                cy.get ('input[type="file"]#file-upload')
+                            
+                .selectFile ('@sampleFile') 
+                .should(function($input){
+                    expect($input[0].files[0].name).to.equal('example.json')
+                })
+               
+                })
+    })
+    
 
-}) 
 
