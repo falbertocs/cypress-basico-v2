@@ -10,6 +10,10 @@ jobs:
         uses: actions/checkout@v4
       - name: Cypress run
         uses: cypress-io/github-action@v6
+<<<<<<< HEAD
         with:
           build: npm run build
           start: npm start
+=======
+    
+>>>>>>> 473ae95e1bbcbf576ef9c2627b75ca9034105d0d
